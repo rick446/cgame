@@ -21,9 +21,9 @@ class Game:
         bg_img = util.load_image('snow.png')
         self.background = pygame.Surface(self.screen.get_size())
         util.blit_tiled(bg_img, self.background)
-        self.sprites = pygame.sprite.RenderUpdates()
+        self.dl = pygame.sprite.RenderUpdates()
         self.player = Hero(self)
-        self.sprites.add(self.player)
+        self.dl.add(self.player)
         self.crosshair = Crosshair(self)
         self.controller = Controller(self)
 
@@ -40,10 +40,10 @@ class Game:
                     if event.unicode == 'q':
                         return
 
-            self.sprites.clear(self.screen, self.background)
+            self.dl.clear(self.screen, self.background)
             self.controller.update()
-            self.sprites.update()
-            dirty_list = self.sprites.draw(self.screen)
+            self.dl.update()
+            dirty_list = self.dl.draw(self.screen)
             pygame.display.update(dirty_list)
 
     def shoot(self, target, charge):
@@ -51,7 +51,7 @@ class Game:
         v = (target - x).astype(float)
         v /= np.linalg.norm(v)
         arrow = Arrow(self, x, v, charge)
-        self.sprites.add(arrow)
+        self.dl.add(arrow)
 
 
 class Controller:
@@ -103,6 +103,6 @@ class Controller:
     def handle_player_shoot(self):
         b1, b2, b3 = pygame.mouse.get_pressed()
         if b3:
-            self._game.sprites.add(self._game.crosshair)
+            self._game.dl.add(self._game.crosshair)
         elif self._game.crosshair.charge:
             self._game.crosshair.shoot()

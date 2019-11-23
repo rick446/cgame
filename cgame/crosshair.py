@@ -42,8 +42,8 @@ class Crosshair(pygame.sprite.Sprite):
             self._game.player.x, v,
             self.charge
         )
-        self._game.sprites.add(arrow)
-        self._game.sprites.remove(self)
+        self._game.dl.add(arrow)
+        self._game.dl.remove(self)
         self.charge = 0.0
 
 
@@ -77,7 +77,7 @@ class Arrow(pygame.sprite.Sprite):
 
     def update(self):
         if self.remain <= 0:
-            self._game.sprites.remove(self)
+            self._game.dl.remove(self)
         speed = 0.5
         dt = self._game.clock.get_time()
         self.x += speed * self.v * dt
