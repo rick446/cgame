@@ -14,7 +14,7 @@ class Hero(pygame.sprite.Sprite):
         )
         self.cur = [1, 1]
         self.x = np.r_[10, 10].astype(float)
-        self.invert = False
+        self.v = np.zeros(2)
 
     @property
     def image(self):
@@ -54,6 +54,9 @@ class Hero(pygame.sprite.Sprite):
         else:
             af = speed * pygame.time.get_ticks() // 125
             self.cur = [2, 1 + (af % 4)]
+
+        if keys[pygame.K_SPACE]:
+            self.cur = [1,5]
 
         self.x += speed * v * self._game.clock.get_time() / 10
 
