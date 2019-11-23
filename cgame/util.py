@@ -30,3 +30,7 @@ def blit_tiled(src, dest):
     for xoff in range(0, dest.get_width(), r.w):
         for yoff in range(0, dest.get_height(), r.h):
             dest.blit(src, r.move(xoff, yoff))
+
+
+def parabola_height(pct):
+    return -4 * (pct - 0.5)**2 + 1

@@ -13,21 +13,40 @@ class Hero(pygame.sprite.Sprite):
             'Old%20hero.png', 16, 16, colorkey=(157, 142, 135)
         )
         self.cur = [1, 1]
-        self.x = np.r_[10, 10].astype(float)
-        self.v = np.zeros(2)
+        self.x = 0j
+        self.jump_pct = 0
+        self.v = 0j
 
     @property
     def image(self):
         img = self._tiles[self.cur[0]][self.cur[1]]
-        if self.invert:
+        if self.v.real < 0:
             img = pygame.transform.flip(img, True, False).convert()
+        if self.jump_pct > 0:
+            h = 1 + util.parabola_height(self.jump_pct)
+            sz = h * np.array(img.get_size(), dtype=float)
+            img = pygame.transform.scale(
+                img, sz.astype(int)
+            ).convert()
         return img
 
     @property
     def rect(self):
-        return self.image.get_rect().move(self.x.astype(int))
+        x = np.array([self.x.real, self.x.imag])
+        return self.image.get_rect().move(x.astype(int))
 
     def update(self):
+        self.x += self.v * self._game.clock.get_time() / 10
+
+        if self.jump_pct > 0:
+            self.cur = [1, 5]
+        elif (self.v == np.zeros(2)).all():
+            self.cur = [1, 1]
+        else:
+            af = np.abs(self.v) * pygame.time.get_ticks() // 125
+            self.cur = [2, 1 + int(af % 4)]
+
+    def update2(self):
         keys = pygame.key.get_pressed()
         speed = 2
         if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:

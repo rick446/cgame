@@ -9,22 +9,42 @@ class Crosshair(pygame.sprite.Sprite):
     def __init__(self, game):
         super().__init__()
         self._game = game
-        self.image = util.load_image('crosshair.png')
-        self.rect = self.image.get_rect()
+        self._image = util.load_image('crosshair.png')
+        self.x = 0j
         self.charge = 0.0
 
     def update(self):
-        pos = pygame.mouse.get_pos()
-        self.rect.center = pos
-
-        b1, b2, b3 = pygame.mouse.get_pressed()
         dt = self._game.clock.get_time()
-        if b1:
-            self.charge = min(1.0, self.charge + dt / 1000)
-        else:
-            if self.charge:
-                self._game.shoot(pos, self.charge)
-                self.charge = 0
+        pos = pygame.mouse.get_pos()
+        self.x = complex(*pos)
+        self.charge = min(1.0, self.charge + dt / 200)
+
+    @property
+    def image(self):
+        sz = self.charge * np.array(self._image.get_size(), dtype=float)
+        return pygame.transform.scale(
+            self._image, sz.astype(int)
+        )
+
+    @property
+    def rect(self):
+        r = self.image.get_rect()
+        r.center = (self.x.real, self.x.imag)
+        return r
+
+    def shoot(self):
+        v = self._game.crosshair.x - self._game.player.x
+        if abs(v):
+            v /= abs(v)
+
+        arrow = Arrow(
+            self._game,
+            self._game.player.x, v,
+            self.charge
+        )
+        self._game.sprites.add(arrow)
+        self._game.sprites.remove(self)
+        self.charge = 0.0
 
 
 class Arrow(pygame.sprite.Sprite):
@@ -40,19 +60,19 @@ class Arrow(pygame.sprite.Sprite):
 
     @property
     def image(self):
-        angle = np.angle(complex(*self.v), deg=True)
+        angle = np.angle(self.v, deg=True)
         charge_remain = self.remain / self.charge
-        scale = -4 * (charge_remain - 0.5)**2 + 1
+        h = 1 + util.parabola_height(charge_remain)
         return pygame.transform.rotozoom(
             self._image,
             -angle,
-            scale * 0.8,
+            h * 0.8,
         )
 
     @property
     def rect(self):
         r = self.image.get_rect()
-        r.center = self.x.astype(int)
+        r.center = (self.x.real, self.x.imag)
         return r
 
     def update(self):
