@@ -1,0 +1,13 @@
+.env
+pcc/gen/*
+*.egg-info/
+.ipynb_checkpoints/
+docs/gen/docs.html
+docs/gen/docs-raw.yaml
+pcc-docs.zip
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.noseids
