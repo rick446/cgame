@@ -13,7 +13,7 @@ class Hero(pygame.sprite.Sprite):
             'Old%20hero.png', 16, 16, colorkey=(157, 142, 135)
         )
         self.cur = [1, 1]
-        self.x = np.r_[10, 10]
+        self.x = np.r_[10, 10].astype(float)
         self.invert = False
 
     @property
@@ -25,7 +25,7 @@ class Hero(pygame.sprite.Sprite):
 
     @property
     def rect(self):
-        return self.image.get_rect().move(self.x)
+        return self.image.get_rect().move(self.x.astype(int))
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -38,14 +38,14 @@ class Hero(pygame.sprite.Sprite):
         v = np.zeros(2)
         self.invert = False
 
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             v[0] = -1
             self.invert = True
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             v[0] = 1
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             v[1] = -1
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             v[1] = 1
 
         if (v == np.zeros(2)).all():
@@ -55,6 +55,6 @@ class Hero(pygame.sprite.Sprite):
             af = speed * pygame.time.get_ticks() // 125
             self.cur = [2, 1 + (af % 4)]
 
-        self.x = (
-            self.x + speed * v * self._game.clock.get_time() / 10
-        ).astype(int)
+        self.x += speed * v * self._game.clock.get_time() / 10
+
+

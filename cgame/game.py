@@ -1,7 +1,9 @@
 import pygame
+import numpy as np
 
 from . import util
 from .hero import Hero
+from .crosshair import Crosshair, Arrow
 
 
 class Game:
@@ -15,11 +17,13 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         self.clock = pygame.time.Clock()
 
-        bg_img = util.load_image('rocks.png')
+        # bg_img = util.load_image('rocks.png')
+        bg_img = util.load_image('snow.png')
         self.background = pygame.Surface(self.screen.get_size())
         util.blit_tiled(bg_img, self.background)
         self.sprites = pygame.sprite.RenderUpdates()
-        self.sprites.add(Hero(self))
+        self.hero = Hero(self)
+        self.sprites.add(self.hero, Crosshair(self))
 
     def run(self):
         self.screen.blit(self.background, (0, 0))
@@ -38,3 +42,10 @@ class Game:
             self.sprites.update()
             dirty_list = self.sprites.draw(self.screen)
             pygame.display.update(dirty_list)
+
+    def shoot(self, target, charge):
+        x = self.hero.x.astype(float)
+        v = (target - x).astype(float)
+        v /= np.linalg.norm(v)
+        arrow = Arrow(self, x, v, charge)
+        self.sprites.add(arrow)
