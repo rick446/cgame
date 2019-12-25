@@ -5,6 +5,7 @@ from . import util
 
 
 class Crosshair(pygame.sprite.Sprite):
+    CHARGE_TIME = 400
 
     def __init__(self, game):
         super().__init__()
@@ -17,7 +18,7 @@ class Crosshair(pygame.sprite.Sprite):
         dt = self._game.clock.get_time()
         pos = pygame.mouse.get_pos()
         self.x = complex(*pos)
-        self.charge = min(1.0, self.charge + dt / 200)
+        self.charge = min(1.0, self.charge + dt / self.CHARGE_TIME)
 
     @property
     def image(self):
@@ -48,6 +49,7 @@ class Crosshair(pygame.sprite.Sprite):
 
 
 class Arrow(pygame.sprite.Sprite):
+    FLIGHT_TIME = 1000
 
     def __init__(self, game, x, v, charge):
         super().__init__()
@@ -80,5 +82,9 @@ class Arrow(pygame.sprite.Sprite):
             self._game.dl.remove(self)
         speed = 0.5
         dt = self._game.clock.get_time()
-        self.x += speed * self.v * dt
-        self.remain -= dt / 1000
+
+        x = self.x + speed * self.v * dt
+        if not self._game.collide_walls(x):
+            self.x = x
+
+        self.remain -= dt / self.FLIGHT_TIME

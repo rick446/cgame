@@ -1,9 +1,11 @@
+import sys
 import pygame
 import numpy as np
 
 from . import util
 from .hero import Hero
 from .crosshair import Crosshair, Arrow
+from .map import Wall
 
 
 class Game:
@@ -17,15 +19,30 @@ class Game:
         self.screen = pygame.display.set_mode((width, height))
         self.clock = pygame.time.Clock()
 
-        # bg_img = util.load_image('rocks.png')
         bg_img = util.load_image('snow.png')
         self.background = pygame.Surface(self.screen.get_size())
         util.blit_tiled(bg_img, self.background)
         self.dl = pygame.sprite.RenderUpdates()
-        self.player = Hero(self)
+        self.player = Hero(self, complex(16, 16))
         self.dl.add(self.player)
         self.crosshair = Crosshair(self)
         self.controller = Controller(self)
+        self.walls = pygame.sprite.Group()
+        self.load_map('map0.svg')
+        self.dl.add(self.walls)
+
+    def load_map(self, filename):
+        tree = util.load_etree(filename)
+        root = tree.getroot()
+        self.walls.add([
+            Wall.from_svg(rect)
+            for rect in root.iter('{http://www.w3.org/2000/svg}rect')
+        ])
+        circ = next(root.iter('{http://www.w3.org/2000/svg}circle'))
+        self.player.x = complex(
+            int(round(float(circ.attrib['cx']))),
+            int(round(float(circ.attrib['cy'])))
+        )
 
     def run(self):
         self.screen.blit(self.background, (0, 0))
@@ -46,12 +63,11 @@ class Game:
             dirty_list = self.dl.draw(self.screen)
             pygame.display.update(dirty_list)
 
-    def shoot(self, target, charge):
-        x = self.player.x.astype(float)
-        v = (target - x).astype(float)
-        v /= np.linalg.norm(v)
-        arrow = Arrow(self, x, v, charge)
-        self.dl.add(arrow)
+    def collide_walls(self, x):
+        for w in self.walls.sprites():
+            if w.rect.collidepoint(x.real, x.imag):
+                return True
+        return False
 
 
 class Controller:
@@ -63,6 +79,7 @@ class Controller:
         self.handle_player_jumping()
         self.handle_player_velocity()
         self.handle_player_shoot()
+        self.handle_doors()
 
     def handle_player_velocity(self):
         keys = pygame.key.get_pressed()
@@ -106,3 +123,13 @@ class Controller:
             self._game.dl.add(self._game.crosshair)
         elif self._game.crosshair.charge:
             self._game.crosshair.shoot()
+
+    def handle_doors(self):
+        collisions = pygame.sprite.spritecollide(
+            self._game.player, self._game.walls,
+            False
+        )
+        for c in collisions:
+            if c.attrib['id'] == 'door1':
+                sys.exit(1)
+

@@ -1,4 +1,5 @@
 import pkg_resources
+import xml.etree.ElementTree as ET
 
 import pygame
 
@@ -9,6 +10,29 @@ def load_image(filename):
             'cgame', f'img/{filename}'
         )
     )
+
+
+def load_etree(filename):
+    fn = pkg_resources.resource_filename(
+        'cgame', f'img/{filename}'
+    )
+    return ET.parse(fn)
+
+
+def load_map(filename):
+    fn = pkg_resources.resource_filename(
+        'cgame', f'img/{filename}'
+    )
+    tree = ET.parse(fn)
+    root = tree.getroot()
+    for rect in root.iter('{http://www.w3.org/2000/svg}rect'):
+        r = pygame.Rect(
+            int(round(float(rect.attrib['x']))),
+            int(round(float(rect.attrib['y']))),
+            int(round(float(rect.attrib['width']))),
+            int(round(float(rect.attrib['height']))),
+        )
+        yield r
 
 
 def load_tiled_images(filename, width, height, colorkey=None):

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024px"
+   height="768px"
+   viewBox="0 0 1024 768"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   sodipodi:docname="map0.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0703125"
+     inkscape:cx="510.96545"
+     inkscape:cy="384.02727"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1035"
+     inkscape:window-x="-37"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:1.00488818"
+       id="rect12"
+       width="952.55841"
+       height="18.53648"
+       x="33.632057"
+       y="18.801699" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff;stroke-width:1.01827967"
+       id="rect4696"
+       width="28.963503"
+       height="718.83203"
+       x="34.569344"
+       y="32.350452" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="rect4698"
+       width="959.53284"
+       height="13.080292"
+       x="34.569344"
+       y="738.10217" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="rect4700"
+       width="13.577352"
+       height="720.2348"
+       x="972.61316"
+       y="18.801699" />
+    <circle
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="path4704"
+       cx="101.37226"
+       cy="66.802917"
+       r="8.8759127" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="rect4706"
+       width="41.109489"
+       height="351.29926"
+       x="470.8905"
+       y="28.963503" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff;stroke-width:0.95846003"
+       id="rect4708"
+       width="41.151039"
+       height="341.99777"
+       x="471.80405"
+       y="402.66534" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff;stroke-width:0.79274255"
+       id="rect4712"
+       width="158.10512"
+       height="21.696297"
+       x="511.89636"
+       y="358.67007"
+       ry="0"
+       rx="0" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff;stroke-width:1.93542647"
+       id="rect4714"
+       width="288.10788"
+       height="22.574173"
+       x="688.88037"
+       y="357.39221"
+       ry="0" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff;stroke-width:0.78303772"
+       id="rect4718"
+       width="155.31186"
+       height="25.443241"
+       x="512.84662"
+       y="402.55685" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="rect4722"
+       width="282.16058"
+       height="22.423357"
+       x="694.18976"
+       y="403.62045" />
+    <rect
+       style="fill:#000c00;fill-opacity:1;stroke:#ffffff"
+       id="door1"
+       width="41.109489"
+       height="14.014599"
+       x="957.66425"
+       y="384"
+       inkscape:label="#rect4524" />
+  </g>
+</svg>
