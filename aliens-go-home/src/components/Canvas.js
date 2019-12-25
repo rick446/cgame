@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import fp from 'lodash/fp';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
+import * as A from '../actions';
 import {gameHeight} from '../utils/constants';
 
 import Sky from './Sky';
@@ -18,11 +19,20 @@ import Title from './Title';
 
 
 function Canvas({trackMouse}) {
+	const gameState = useSelector(state => state.gameState);
+	const angle = useSelector(state => state.angle);
+	const dispatch = useDispatch();
+
 	const viewBox = [
 		window.innerWidth / -2, 100 - gameHeight,
 		window.innerWidth, gameHeight,
-	]
-	const gameState = useSelector(state => state.gameState);
+	];
+
+	const lives = fp.map(i => <Heart key={i} position={{
+			x: -180 - (i * 70),
+			y: 35,
+		}}
+	/>, fp.range(0, gameState.lives));
 
 	return (
 		<svg
@@ -30,6 +40,7 @@ function Canvas({trackMouse}) {
       		preserveAspectRatio="xMaxYMax "
       		onMouseMove={trackMouse}
       		viewBox={viewBox}
+      		onClick={e => gameState.started && dispatch(A.shoot(angle))}
 		>
 			<defs>
 				<filter id="shadow">
@@ -38,11 +49,13 @@ function Canvas({trackMouse}) {
 			</defs>
 			<Sky />
 			<Ground />
+			{fp.map(
+				cb => <CannonBall key={cb.id.getTime()} position={cb.position}/>,
+				gameState.cannonBalls,
+			)}
 			<CannonPipe />
 			<CannonBase />
-			<CannonBall position={{x: 0, y: -100}}/>
-			<CurrentScore score={15}/>
-			<Heart position={{x:-300, y:35}} />
+			<CurrentScore score={gameState.kills}/>
 			{!gameState.started && 
 				<g>
 					<StartGame />
@@ -50,9 +63,10 @@ function Canvas({trackMouse}) {
 				</g>
 			}
 			{fp.map(
-				fo => <FlyingObject key={fo.id} position={fo.position}/>, 
+				fo => <FlyingObject key={fo.id.getTime()} position={fo.position}/>, 
 				gameState.flyingObjects
 			)}
+			{lives}
 		</svg>
 	)
 }

@@ -9,8 +9,16 @@ let transientState = {
 	canvasMousePosition: {x: 0, y: 0},
 }
 
+
 const trackMouse = e => {
 	transientState.canvasMousePosition = getCanvasPosition(e)
+}
+
+
+const fixSizing = () => {
+	const cnv = document.getElementById('aliens-go-home-canvas');
+	cnv.style.width = `${window.innerWidth}px`;
+	cnv.style.height = `${window.innerHeight}px`;
 }
 
 
@@ -22,11 +30,8 @@ function App() {
 			() => dispatch(moveObjects(transientState.canvasMousePosition)),
 			10
 		);
-		window.onresize = () => {
-			const cnv = document.getElementById('aliens-go-home-canvas');
-			cnv.style.width = `${window.innerWidth}px`;
-			cnv.style.height = `${window.innerHeight}px`;
-		}
+		window.onresize = fixSizing;
+		fixSizing();
 		return () => clearInterval(interval);
 	});
 
