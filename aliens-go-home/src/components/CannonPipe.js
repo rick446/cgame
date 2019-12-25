@@ -1,15 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
+
 import {pathFromBezierCurve} from '../utils/formulas';
 
 
-function CannonPipe({rotation}) {
+function CannonPipe() {
+	const angle = useSelector(state => state.angle)
+	
 	const cannonPipeStyle = {
 		fill: '#999',
 		stroke: '#666',
 		strokeWidth: '2px',
 	};
-	const transform = `rotate(${rotation}, 0, 0)`;
+	const transform = `rotate(${angle}, 0, 0)`;
 
 	const muzzleWidth = 40;
 	const halfMuzzle = muzzleWidth / 2;
@@ -34,10 +37,6 @@ function CannonPipe({rotation}) {
 		</g>
 	)
 }
-
-CannonPipe.propTypes = {
-	rotation: PropTypes.number.isRequired,
-};
 
 
 export default CannonPipe;

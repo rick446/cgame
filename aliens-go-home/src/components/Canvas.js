@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Sky from './Sky';
 import Ground from './Ground';
 import CannonBase from './CannonBase';
 import CannonPipe from './CannonPipe';
 
 
-function Canvas() {
+function Canvas({trackMouse}) {
 	const viewBox = [
 		window.innerWidth / -2, 100 - window.innerHeight,
 		window.innerWidth, window.innerHeight,
@@ -14,15 +16,20 @@ function Canvas() {
 	return (
 		<svg
 			id="aliens-go-home-canvas"
-			preserveAspectRatio="xMaxYMax none"
-			viewBox={viewBox}
+      		preserveAspectRatio="xMaxYMax"
+      		onMouseMove={trackMouse}
+      		viewBox={viewBox}
 		>
 			<Sky />
 			<Ground />
-			<CannonPipe rotation={45}/>
+			<CannonPipe />
 			<CannonBase />
 		</svg>
 	)
+}
+
+Canvas.propTypes = {
+	trackMouse: PropTypes.func.isRequired,
 }
 
 

@@ -1,9 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+
+import {getCanvasPosition} from './utils/formulas';
 import Canvas from './components/Canvas';
+import {moveObjects} from './actions/index';
+
+let transientState = {
+	canvasMousePosition: {x: 0, y: 0},
+}
+
+const trackMouse = e => {
+	transientState.canvasMousePosition = getCanvasPosition(e)
+}
 
 
 function App() {
-	return (<Canvas />)
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const interval = setInterval(
+			() => dispatch(moveObjects(transientState.canvasMousePosition)),
+			10
+		);
+		return () => clearInterval(interval);
+	});
+
+
+	return <Canvas trackMouse={trackMouse}/>;
 }
 
 
