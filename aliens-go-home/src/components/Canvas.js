@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import fp from 'lodash/fp';
+import {useSelector} from 'react-redux';
+
+import {gameHeight} from '../utils/constants';
 
 import Sky from './Sky';
 import Ground from './Ground';
@@ -8,24 +12,28 @@ import CannonPipe from './CannonPipe';
 import CannonBall from './CannonBall';
 import CurrentScore from './CurrentScore';
 import FlyingObject from './FlyingObject';
+import Heart from './Heart';
+import StartGame from './StartGame';
+import Title from './Title';
 
 
 function Canvas({trackMouse}) {
 	const viewBox = [
-		window.innerWidth / -2, 100 - window.innerHeight,
-		window.innerWidth, window.innerHeight,
+		window.innerWidth / -2, 100 - gameHeight,
+		window.innerWidth, gameHeight,
 	]
+	const gameState = useSelector(state => state.gameState);
 
 	return (
 		<svg
 			id="aliens-go-home-canvas"
-      		preserveAspectRatio="xMaxYMax slice"
+      		preserveAspectRatio="xMaxYMax "
       		onMouseMove={trackMouse}
       		viewBox={viewBox}
 		>
 			<defs>
 				<filter id="shadow">
-					<feDropShadow dx="!" dy="1" stdDeviation="2"/>
+					<feDropShadow dx="1" dy="1" stdDeviation="2"/>
 				</filter>
 			</defs>
 			<Sky />
@@ -34,8 +42,17 @@ function Canvas({trackMouse}) {
 			<CannonBase />
 			<CannonBall position={{x: 0, y: -100}}/>
 			<CurrentScore score={15}/>
-			<FlyingObject position={{x: -150, y: -300}}/>
-			<FlyingObject position={{x: 150, y: -300}}/>
+			<Heart position={{x:-300, y:35}} />
+			{!gameState.started && 
+				<g>
+					<StartGame />
+					<Title />
+				</g>
+			}
+			{fp.map(
+				fo => <FlyingObject key={fo.id} position={fo.position}/>, 
+				gameState.flyingObjects
+			)}
 		</svg>
 	)
 }

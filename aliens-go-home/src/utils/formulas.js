@@ -36,3 +36,9 @@ export function getCanvasPosition(ev) {
 
 	return point.matrixTransform(svg.getScreenCTM().inverse());
 }
+
+
+export function randomChoice(arr) {
+	const index = Math.floor(Math.random() * arr.length);
+	return arr[index];
+}

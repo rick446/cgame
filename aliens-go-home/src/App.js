@@ -22,6 +22,11 @@ function App() {
 			() => dispatch(moveObjects(transientState.canvasMousePosition)),
 			10
 		);
+		window.onresize = () => {
+			const cnv = document.getElementById('aliens-go-home-canvas');
+			cnv.style.width = `${window.innerWidth}px`;
+			cnv.style.height = `${window.innerHeight}px`;
+		}
 		return () => clearInterval(interval);
 	});
 
