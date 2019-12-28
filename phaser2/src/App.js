@@ -12,7 +12,7 @@ export default function App() {
       parent: 'content',
       width: 320,
       height: 240,
-      zoom: 2,
+      zoom: 4,
       pixelArt: true,
       physics: {
         default: 'arcade',
