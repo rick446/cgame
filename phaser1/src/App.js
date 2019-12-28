@@ -5,6 +5,7 @@ import './App.css';
 import Game from './components/Game';
 import Scene from './components/Scene';
 import Image from './components/Image';
+import foo from 'bar';
 
 
 function preload() {
@@ -13,7 +14,7 @@ function preload() {
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 
+    this.load.spritesheet('dude',
         'assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
@@ -92,7 +93,7 @@ function collectStar(player, star) {
   bomb.setBounce(1);
   bomb.setCollideWorldBounds(true);
   bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-} 
+}
 
 function hitBomb (player, bomb)
 {
@@ -131,7 +132,7 @@ function update() {
     if (cursors.up.isDown && player.body.touching.down)
     {
         player.setVelocityY(-Vspeed);
-    }    
+    }
 
 }
 
