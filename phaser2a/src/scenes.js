@@ -52,10 +52,9 @@ export class WorldScene extends Phaser.Scene {
         this.cameras.main.setBounds(
             0, 0, map.widthInPixels, map.heightInPixels
         );
-        this.cameras.main.startFollow(this.player);
         this.cameras.main.roundPixels = true;
-this.cameraDolly = new Phaser.Geom.Point(this.player.x, this.player.y);
-this.cameras.main.startFollow(this.cameraDolly);
+        this.cameraDolly = new Phaser.Geom.Point(this.player.x, this.player.y);
+        this.cameras.main.startFollow(this.cameraDolly);
 
         let anims = {
             left:  [1, 7, 1, 13],
@@ -132,8 +131,7 @@ this.cameras.main.startFollow(this.cameraDolly);
             this.player.anims.stop();
         }
 
-    this.cameraDolly.x = Math.floor(this.player.x);
-    this.cameraDolly.y = Math.floor(this.player.y);
-    console.log('new')
+        this.cameraDolly.x = Math.floor(this.player.x);
+        this.cameraDolly.y = Math.floor(this.player.y);
     }
 }

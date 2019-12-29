@@ -18,10 +18,11 @@ export default function App() {
         default: 'arcade',
         arcade: {
           gravity: {y: 0},
-          //debug: true,
+          debug: true,
         }
       },
-      scene: [BootScene, WorldScene]
+      scene: [BootScene, WorldScene],
+      roundPixels: true
     });
   })
   return (
