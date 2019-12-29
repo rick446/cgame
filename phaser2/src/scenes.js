@@ -97,7 +97,7 @@ export class WorldScene extends Phaser.Scene {
         zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
 
-        this.cameras.main.shake(300);
+        this.cameras.main.flash(300);
     }
 
     update() {
