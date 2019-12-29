@@ -76,6 +76,27 @@ export class WorldScene extends Phaser.Scene {
         ])(anims);
 
         this.physics.add.collider(this.player, obstacles);
+
+        this.spawns = this.physics.add.group({
+            classType: Phaser.GameObjects.Zone
+        });
+        for(var i = 0; i < 30; i++) {
+            var x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+            var y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+            this.spawns.create(x, y, 20, 20);
+        }
+        this.physics.add.overlap(
+            this.player, this.spawns, this.onMeetEnemy,
+            false, this,
+        );
+    }
+
+    onMeetEnemy = (player, zone) => {
+        console.log('met enemy')
+        zone.x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
+        zone.y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
+
+        this.cameras.main.shake(300);
     }
 
     update() {
@@ -97,8 +118,10 @@ export class WorldScene extends Phaser.Scene {
         // Animation
         if(this.cursors.left.isDown) {
             this.player.anims.play('left', true);
+            this.player.flipX = true;
         } else if(this.cursors.right.isDown) {
             this.player.anims.play('right', true);
+            this.player.flipX = false;
         } else if(this.cursors.up.isDown) {
             this.player.anims.play('up', true);
         } else if(this.cursors.down.isDown) {
