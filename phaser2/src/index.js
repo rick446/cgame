@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import {BootScene, WorldScene} from './scenes';
+import {BootScene, BattleScene, UIScene, WorldScene} from './scenes';
 
 const config = {
   // type: Phaser.AUTO,
@@ -17,7 +17,7 @@ const config = {
       debug: true,
     }
   },
-  scene: [BootScene, WorldScene],
+  scene: [BootScene, BattleScene, UIScene, WorldScene],
   antialias: false,
 };
 
